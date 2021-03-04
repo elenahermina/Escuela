@@ -7,21 +7,22 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.elena.escuela.databinding.ActivityMainBinding
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
+    private lateinit var viewModel: MainActivityViewModel
 
-    companion object {
-        const val EMAIL = "EMAIL"
-    }
-    val usuarioValido = RegisteredUser("elena@neoland.com")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        viewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(MainActivityViewModel::class.java)
 
 
 
@@ -36,12 +37,12 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(textContent: Editable?) {
                 textContent?.let {
-                    binding.checkBox.isEnabled = textContent.contains("@") &&  textContent.contains(".")
+                    binding.checkBox.isEnabled = textContent.contains("@") && textContent.contains(".")
                 }
             }
-        } )
+        })
 
-        cargarPreferencias()?.let {
+        viewModel.cargarPreferencias()?.let {
             binding.checkBox.isChecked = it.isNotEmpty()
             binding.editText.setText(it)
         }
@@ -57,35 +58,24 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.button.setOnClickListener {
-            if (binding.checkBox.isEnabled && binding.checkBox.isChecked){
-                guardarPreferencias(binding.editText.text.toString())
+            if (binding.checkBox.isEnabled && binding.checkBox.isChecked) {
+                viewModel.guardarPreferencias(binding.editText.text.toString())
             } else {
-                guardarPreferencias("")
+                viewModel.guardarPreferencias("")
             }
-            if(binding.editText.text.toString().contentEquals(usuarioValido.email)) {
-                val intent = Intent(this, ProfileActivity::class.java)
-                intent.putExtra(ProfileActivity.VALUE_1, binding.editText.text.toString())
+            lifecycleScope.launch {
 
-                startActivity(intent)
+                if (viewModel.isStudentValid((binding.editText.toString()))) {
+                    startActivity(intent)
 
-            } else {
-                Toast.makeText(this, "El usuario no esta registrado", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this@MainActivity, "Nada", Toast.LENGTH_LONG).show()
+                }
             }
+
         }
 
     }
-    private  fun cargarPreferencias() : String? {
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        return sharedPref.getString(EMAIL, "")
-    }
-
-    private  fun guardarPreferencias(string : String) {
-        val sharedPref = getPreferences(Context.MODE_PRIVATE)
-        with (sharedPref.edit()) {
-            putString(EMAIL, string)
-            commit()
-        }
-    }
-
-
 }
+
+

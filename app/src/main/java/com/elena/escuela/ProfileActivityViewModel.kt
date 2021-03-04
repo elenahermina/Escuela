@@ -2,11 +2,9 @@ package com.elena.escuela
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 
-class RegisteredUserViewModel(application: Application): AndroidViewModel(application) {
+class ProfileActivityViewModel(application: Application): AndroidViewModel(application) {
     private var myself = Student("", "Yo", "barbullushi", R.mipmap.ic_launcher)
 
     suspend fun getListaAlumnos(): List<Student>{

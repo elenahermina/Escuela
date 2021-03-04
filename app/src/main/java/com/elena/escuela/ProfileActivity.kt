@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 class ProfileActivity : AppCompatActivity() {
     lateinit var binding: ActivityPerfilBinding
     private  var adapter = StudentAdapter()
-    private lateinit var model :RegisteredUserViewModel
+    private lateinit var model :ProfileActivityViewModel
 
     companion object {
         const val VALUE_1 = "VALUE_1"
@@ -24,7 +24,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        model = ViewModelProvider(this).get(RegisteredUserViewModel::class.java)
+        model = ViewModelProvider(this).get(ProfileActivityViewModel::class.java)
 
         val email = intent.getStringExtra(VALUE_1)
         email?.let {
