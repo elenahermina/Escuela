@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun afterTextChanged(textContent: Editable?) {
                 textContent?.let {
-                    binding.checkBox.isEnabled = textContent.contains("@") && textContent.contains(".")
+                    binding.checkBox.isEnabled = viewModel.isStudentValid(textContent.toString())
                 }
             }
         })
@@ -64,8 +64,9 @@ class MainActivity : AppCompatActivity() {
                 viewModel.guardarPreferencias("")
             }
             lifecycleScope.launch {
-
-                if (viewModel.isStudentValid((binding.editText.toString()))) {
+                if (viewModel.isEmailRegistered((binding.editText.text.toString()))) {
+                    //viewModel.insertNewUser(binding.editText.toString())
+                        val intent = Intent(this@MainActivity, ProfileActivity::class.java)
                     startActivity(intent)
 
                 } else {

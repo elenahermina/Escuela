@@ -1,7 +1,9 @@
 package com.elena.escuela
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +23,6 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
         model = ViewModelProvider(this).get(ProfileActivityViewModel::class.java)
@@ -32,6 +33,13 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         createRecyclerView()
+
+
+        binding.actionButton.setOnClickListener {
+
+            val i = Intent(this , NewUserActivity:: class.java)
+            startActivity(i)
+        }
 
     }
 
@@ -49,6 +57,8 @@ class ProfileActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
         }
     }
+
+
 
 
 }

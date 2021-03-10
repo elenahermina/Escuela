@@ -9,10 +9,11 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-@Database(entities = [Student::class, RegisteredUser :: class], version = 1)
+@Database(entities = [Student::class, RegisteredUser :: class, DbEntity::class], version = 1)
 abstract class Db : RoomDatabase() {
     abstract fun studentsDao(): StudentDao
     abstract  fun registeredUserDao(): RegisteredUserDao
+    abstract  fun dbDao () : DbDao
 
     companion object {
 
@@ -51,6 +52,7 @@ abstract class Db : RoomDatabase() {
 
                         INSTANCE?.studentsDao()?.insertAll(students)
                         INSTANCE?.registeredUserDao()?.insert(usuarioValido)
+                        INSTANCE?.dbDao()?.insert(DbEntity(0 , true))
 
 
                     }
