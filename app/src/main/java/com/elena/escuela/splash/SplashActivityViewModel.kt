@@ -1,9 +1,11 @@
-package com.elena.escuela
+package com.elena.escuela.splash
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import com.elena.escuela.db.Db
+import com.elena.escuela.db.DbEntity
 
 class SplashActivityViewModel(application: Application): AndroidViewModel(application) {
 

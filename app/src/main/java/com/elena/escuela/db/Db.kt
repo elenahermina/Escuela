@@ -1,10 +1,16 @@
-package com.elena.escuela
+package com.elena.escuela.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.elena.escuela.*
+import com.elena.escuela.dao.DbDao
+import com.elena.escuela.dao.RegisteredUserDao
+import com.elena.escuela.dao.StudentDao
+import com.elena.escuela.student.RegisteredUser
+import com.elena.escuela.student.Student
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,34 +43,25 @@ abstract class Db : RoomDatabase() {
             return object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     CoroutineScope(Dispatchers.IO).launch {
-                        val students: List<Student> = listOf(
-                                Student("oliver@gmail.com", "Oliver", "Sanchez", R.drawable.avatar_1),
-                                Student("ana@gmail.com", "Ana", "Lopez", R.drawable.avatar_11),
-                                Student("isabel@gmail.com", "Isabel", "Blanco", R.drawable.avatar_17),
-                                Student("dana@gmail.com", "Dana", "Negro", R.drawable.avatar_5),
-                                Student("jose@gmail.com", "Jose", "Garcia", R.drawable.avatar_7),
-                                Student("elena@neoland.com", "Yo", "barbullushi", R.mipmap.ic_launcher)
+                        INSTANCE?.registeredUserDao()?.insert(RegisteredUser("elena@neoland.com"))
 
+                        INSTANCE?.studentsDao()?.insert(Student("oliver@gmail.com", "Oliver", "Sanchez", R.drawable.avatar_1))
+                        INSTANCE?.studentsDao()?.insert(Student("ana@gmail.com", "Ana", "Lopez", R.drawable.avatar_11))
+                        INSTANCE?.studentsDao()?.insert(Student("isabel@gmail.com", "Isabel", "Blanco", R.drawable.avatar_17))
+                        INSTANCE?.studentsDao()?.insert(Student("dana@gmail.com", "Dana", "Negro", R.drawable.avatar_5))
+                        INSTANCE?.studentsDao()?.insert(Student("jose@gmail.com", "Jose", "Garcia", R.drawable.avatar_7))
 
-                        )
-
-                        val usuarioValido = RegisteredUser("elena@neoland.com")
-
-                        INSTANCE?.studentsDao()?.insertAll(students)
-                        INSTANCE?.registeredUserDao()?.insert(usuarioValido)
-                        INSTANCE?.dbDao()?.insert(DbEntity(0 , true))
-
+                        INSTANCE?.dbDao()?.insert(DbEntity(0, true))
 
                     }
                 }
+
 
                 override fun onOpen(db: SupportSQLiteDatabase) {
                 }
             }
         }
     }
-
-
 }
 
 

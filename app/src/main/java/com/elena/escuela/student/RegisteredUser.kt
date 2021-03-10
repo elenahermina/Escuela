@@ -1,4 +1,4 @@
-package com.elena.escuela
+package com.elena.escuela.student
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

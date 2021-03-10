@@ -1,4 +1,4 @@
-package com.elena.escuela
+package com.elena.escuela.db
 
 import androidx.room.Dao
 import androidx.room.Entity
