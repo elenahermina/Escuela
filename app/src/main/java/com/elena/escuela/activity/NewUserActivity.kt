@@ -10,9 +10,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.elena.escuela.viewmodel.NewUserActivityViewModel
 
 import com.elena.escuela.databinding.CreateUserBinding
+import com.elena.escuela.viewmodel.NewUserActivityViewModel
 import kotlinx.coroutines.launch
 
 class NewUserActivity: AppCompatActivity() {

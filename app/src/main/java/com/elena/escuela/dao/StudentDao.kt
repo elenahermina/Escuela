@@ -14,7 +14,7 @@ interface StudentDao{
     fun getAllLive(): LiveData<List<Student>>
 
     @Insert
-    fun insert(student: Student)
+    fun insert(student: List<Student>)
 
     @Delete
     fun delete(student: Student)

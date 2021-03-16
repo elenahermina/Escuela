@@ -5,6 +5,7 @@ import androidx.room.*
 import com.elena.escuela.db.DbEntity
 
 @Dao
+
 interface DbDao {
     @Query("SELECT * FROM DbEntity")
     fun getAll(): List<DbEntity>

@@ -6,14 +6,16 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.elena.escuela.viewmodel.ProfileActivityViewModel
 import com.elena.escuela.databinding.ActivityPerfilBinding
 import com.elena.escuela.student.Student
 import com.elena.escuela.student.StudentAdapter
+import com.elena.escuela.student.StudentAdapterInterface
+import com.elena.escuela.viewmodel.ProfileActivityViewModel
 
-class ProfileActivity : AppCompatActivity() {
-    lateinit var binding: ActivityPerfilBinding
-    private  var adapter = StudentAdapter()
+class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
+
+    private lateinit var binding: ActivityPerfilBinding
+    private  var adapter = StudentAdapter(this)
     private lateinit var model : ProfileActivityViewModel
 
     companion object {
@@ -27,16 +29,17 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         model = ViewModelProvider(this).get(ProfileActivityViewModel::class.java)
 
-        val email = intent.getStringExtra(VALUE_1)
+       intent.getStringExtra(VALUE_1)
 
         createRecyclerView()
+
 
         model.userList.observe(this){
             updateStudent(it)
             binding.progressBar.visibility = View.GONE
         }
 
-
+         downloadStudent()
 
         binding.actionButton.setOnClickListener {
 
@@ -61,6 +64,16 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun updateStudent(students : List<Student>){
         adapter.updateData(students)
+    }
+
+    private fun downloadStudent() {
+        binding.descargar.setOnClickListener {
+            model.downloadUser()
+        }
+    }
+
+    override fun onItemClick(student: Student) {
+        model.deleteStudent(student)
     }
 }
 
