@@ -3,6 +3,8 @@ package com.elena.escuela.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,8 +30,7 @@ class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
         binding = ActivityPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
         model = ViewModelProvider(this).get(ProfileActivityViewModel::class.java)
-
-       intent.getStringExtra(VALUE_1)
+        intent.getStringExtra(VALUE_1)
 
         createRecyclerView()
 
@@ -48,6 +49,11 @@ class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
         }
 
         binding.progressBar.visibility = View.VISIBLE
+
+
+        binding.bShowDialog.setOnClickListener {
+            showDialog()
+        }
 
     }
 
@@ -74,6 +80,19 @@ class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
 
     override fun onItemClick(student: Student) {
         model.deleteStudent(student)
+    }
+
+    private fun showDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("¿Aceptas ${binding.etText.text}?")
+            .setPositiveButton("Sí") { dialog, id ->
+                Toast.makeText(this, "${binding.etText.text} ha sido aceptado", Toast.LENGTH_LONG).show()
+            }
+            .setNegativeButton("No") { dialog, id ->
+                Toast.makeText(this, "${binding.etText.text} ha sido cancelado", Toast.LENGTH_LONG).show()
+            }
+        builder.create()
+        builder.show()
     }
 }
 

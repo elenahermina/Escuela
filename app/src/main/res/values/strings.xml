@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Escuela</string>
+    <string name="todo">TODO</string>
+    <string name="descargar">descargar</string>
+    <string name="recordar_usuario">Recordar usuario</string>
+    <string name="login">Login</string>
+    <string name="neoland">Neoland</string>
+    <string name="introduce_tu_email">Introduce tu email</string>
 </resources>
