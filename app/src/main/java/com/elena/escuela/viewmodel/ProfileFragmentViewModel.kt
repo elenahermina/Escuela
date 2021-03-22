@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProfileActivityViewModel(application: Application): AndroidViewModel(application) {
+class ProfileFragmentViewModel(application: Application): AndroidViewModel(application) {
 
     val userList : MutableLiveData<List<Student>> = MutableLiveData()
     val status : MutableLiveData<DownloadStatus> = MutableLiveData()

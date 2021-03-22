@@ -8,7 +8,8 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.elena.escuela.activity.ProfileActivity
+import com.elena.escuela.activity.FragmentProfile
+import com.elena.escuela.activity.MenuActivity
 import com.elena.escuela.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
 
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 if (model.verifyUser(binding.editText.text.toString())) {
                     // Lanzamos la activity 2.
-                    startProfileActivity()
+                     MenuActivity()
                 } else {
                     Toast.makeText(this@MainActivity, "El usuario no está en la Base de Datos", Toast.LENGTH_LONG).show()
                 }
@@ -66,8 +67,8 @@ class MainActivity : AppCompatActivity() {
     }
 
         private fun startProfileActivity() {
-            val intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra(ProfileActivity.VALUE_1, binding.editText.text.toString())
+            val intent = Intent(this, MenuActivity::class.java)
+            intent.putExtra(MenuActivity.VALUE_1, binding.editText.text.toString())
             startActivity(intent)
         }
 

@@ -8,28 +8,34 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.elena.escuela.databinding.ActivityPerfilBinding
+import com.elena.escuela.databinding. FragmentPerfilBinding
 import com.elena.escuela.student.Student
 import com.elena.escuela.student.StudentAdapter
 import com.elena.escuela.student.StudentAdapterInterface
-import com.elena.escuela.viewmodel.ProfileActivityViewModel
+import com.elena.escuela.viewmodel.ProfileFragmentViewModel
 
-class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
+class FragmentProfile() : AppCompatActivity(), StudentAdapterInterface {
 
-    private lateinit var binding: ActivityPerfilBinding
+    private lateinit var binding: FragmentPerfilBinding
     private  var adapter = StudentAdapter(this)
-    private lateinit var model : ProfileActivityViewModel
+    private lateinit var model : ProfileFragmentViewModel
+
+
 
     companion object {
+        fun getFragment(): FragmentProfile {
+            return FragmentProfile()
+        }
+
         const val VALUE_1 = "VALUE_1"
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPerfilBinding.inflate(layoutInflater)
+        binding =  FragmentPerfilBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        model = ViewModelProvider(this).get(ProfileActivityViewModel::class.java)
+        model = ViewModelProvider(this).get(ProfileFragmentViewModel::class.java)
         intent.getStringExtra(VALUE_1)
 
         createRecyclerView()
@@ -79,7 +85,7 @@ class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
     }
 
     override fun onItemClick(student: Student) {
-        model.deleteStudent(student)
+        //model.deleteStudent(student)
     }
 
     private fun showDialog() {
@@ -94,6 +100,8 @@ class ProfileActivity : AppCompatActivity(), StudentAdapterInterface {
         builder.create()
         builder.show()
     }
+
+
 }
 
 

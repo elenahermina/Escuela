@@ -14,12 +14,14 @@ import com.elena.escuela.student.Student
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlin.reflect.KParameter
 
-@Database(entities = [Student::class, RegisteredUser :: class, DbEntity::class], version = 1)
+@Database(entities = [Student::class, RegisteredUser :: class, DbEntity::class, Bootcamp :: class], version = 1)
 abstract class Db : RoomDatabase() {
     abstract fun studentsDao(): StudentDao
     abstract  fun registeredUserDao(): RegisteredUserDao
     abstract  fun dbDao () : DbDao
+    abstract fun bootcampsDao(): BootcampDao
 
     companion object {
 
@@ -51,7 +53,13 @@ abstract class Db : RoomDatabase() {
                         INSTANCE?.studentsDao()?.insert(Student("dana@gmail.com", "Dana", "Negro", R.drawable.avatar_5))
                         INSTANCE?.studentsDao()?.insert(Student("jose@gmail.com", "Jose", "Garcia", R.drawable.avatar_7))
 
-                        INSTANCE?.dbDao()?.insert(DbEntity(0, true))
+                        INSTANCE?.bootcampsDao()?.insert(Bootcamp("Mobile Development", ""))
+                        INSTANCE?.bootcampsDao()?.insert(Bootcamp("Data science", ""))
+                        INSTANCE?.bootcampsDao()?.insert(Bootcamp("Cybersecurity", ""))
+                        INSTANCE?.bootcampsDao()?.insert(Bootcamp("Data science", ""))
+
+
+                       INSTANCE?.dbDao()?.insert(DbEntity(0, true))
 
                     }
                 }
